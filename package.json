@@ -1,5 +1,6 @@
 {
   "name": "react-wordle-game",
+  "homepage": "https://binhbb2204.github.io/Wordle/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
