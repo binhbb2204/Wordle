@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TileStatus } from '../types.js';
-
+import { Delete } from 'lucide-react';
 const Key = ({ value, status, onClick }) => {
   const isWideKey = value.length > 1;
 
@@ -25,9 +25,7 @@ const Key = ({ value, status, onClick }) => {
   return (
     <button className={keyClasses} onClick={() => onClick(value)}>
       {value === 'BACKSPACE' ? (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 002.828 0L19 12M3 12l6.414-6.414a2 2 0 012.828 0L19 12" />
-        </svg>
+        <Delete className="w-5 h-5" />
       ) : (
         value
       )}
