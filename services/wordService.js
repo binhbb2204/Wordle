@@ -19,7 +19,7 @@ export const loadWords = async () => {
 
   loadPromise = (async () => {
     try {
-      const response = await fetch('./words.txt');
+      const response = await fetch('/Wordle/words.txt');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
