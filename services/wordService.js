@@ -3,6 +3,7 @@ import { WORD_LENGTH } from '../constants.js';
 let wordList = [];
 let wordSet = new Set();
 let loadPromise = null;
+const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
 
 /**
  * Fetches the word list from words.txt, processes it, and caches it.
@@ -19,7 +20,7 @@ export const loadWords = async () => {
 
   loadPromise = (async () => {
     try {
-      const response = await fetch('/Wordle/words.txt');
+      const response = await fetch(`${basePath}/words.txt`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
