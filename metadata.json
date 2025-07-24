@@ -1,0 +1,5 @@
+
+{
+  "name": "React Wordle Game",
+  "description": "A classic Wordle-style word guessing game built with React and Tailwind CSS. Players have six attempts to guess a five-letter word, with color-coded feedback for each guess."
+}
