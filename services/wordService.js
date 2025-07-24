@@ -3,7 +3,21 @@ import { WORD_LENGTH } from '../constants.js';
 let wordList = [];
 let wordSet = new Set();
 let loadPromise = null;
-const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+
+const getBasePath = () => {
+  // For GitHub Pages: username.github.io/repository-name
+  const hostname = window.location.hostname;
+  const pathname = window.location.pathname;
+  
+  if (hostname.includes('github.io')) {
+    // Extract repo name from path like /repository-name/
+    const pathSegments = pathname.split('/').filter(Boolean);
+    if (pathSegments.length > 0) {
+      return `/${pathSegments[0]}`;
+    }
+  }
+  return '';
+};
 
 /**
  * Fetches the word list from words.txt, processes it, and caches it.
@@ -20,7 +34,10 @@ export const loadWords = async () => {
 
   loadPromise = (async () => {
     try {
-      const response = await fetch(`/services/words.txt`);
+      const basePath = getBasePath();
+      const url = `${basePath}/words.txt`;
+      console.log('Fetching from:', url);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
