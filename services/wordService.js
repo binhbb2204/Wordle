@@ -34,8 +34,7 @@ export const loadWords = async () => {
 
   loadPromise = (async () => {
     try {
-      const basePath = getBasePath();
-      const url = `${basePath}/words.txt`;
+      const url = `${import.meta.env.BASE_URL}words.txt`;
       console.log('Fetching from:', url);
       const response = await fetch(url);
       if (!response.ok) {
