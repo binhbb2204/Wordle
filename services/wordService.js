@@ -20,7 +20,7 @@ export const loadWords = async () => {
 
   loadPromise = (async () => {
     try {
-      const response = await fetch(`${basePath}/words.txt`);
+      const response = await fetch(`/services/words.txt`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
