@@ -6,9 +6,11 @@ import Header from './components/Header.jsx';
 import Board from './components/Board.jsx';
 import Keyboard from './components/Keyboard.jsx';
 import Modal from './components/Modal.jsx';
+import { loadWords } from './services/wordService.js';
 
-const App = () => {
-  const [theme, setTheme] = useState(Theme.LIGHT);
+// This component contains the main game logic and UI.
+// It's rendered only after the word list has been loaded.
+const WordleGame = ({ theme, toggleTheme }) => {
   const {
     solution,
     guesses,
@@ -19,22 +21,6 @@ const App = () => {
     handleKeyPress,
     restartGame,
   } = useWordle();
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (theme === Theme.DARK) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -54,11 +40,6 @@ const App = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyPress, gameStatus]);
   
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
-  };
-
   return (
     <div className="flex flex-col h-screen font-sans text-slate-800 dark:text-slate-100">
       <Header theme={theme} toggleTheme={toggleTheme} />
@@ -88,6 +69,52 @@ const App = () => {
       <Keyboard usedLetters={usedLetters} onKeyPress={handleKeyPress} />
     </div>
   );
+};
+
+
+// The main App component now acts as a loader for the game.
+const App = () => {
+  const [theme, setTheme] = useState(Theme.LIGHT);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+
+    // Load the word list from the text file.
+    loadWords().then(() => {
+      setIsReady(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (theme === Theme.DARK) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
+  };
+
+  // Display a loading screen until the words are loaded.
+  if (!isReady) {
+    return (
+      <div className="flex flex-col h-screen font-sans text-slate-800 dark:text-slate-100">
+         <Header theme={theme} toggleTheme={toggleTheme} />
+         <main className="flex-grow flex items-center justify-center">
+            <div className="text-2xl font-semibold animate-pulse">Loading Game...</div>
+         </main>
+      </div>
+    );
+  }
+
+  return <WordleGame theme={theme} toggleTheme={toggleTheme} />;
 };
 
 export default App;
