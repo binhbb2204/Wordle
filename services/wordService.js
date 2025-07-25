@@ -4,21 +4,6 @@ let wordList = [];
 let wordSet = new Set();
 let loadPromise = null;
 
-const getBasePath = () => {
-  // For GitHub Pages: username.github.io/repository-name
-  const hostname = window.location.hostname;
-  const pathname = window.location.pathname;
-  
-  if (hostname.includes('github.io')) {
-    // Extract repo name from path like /repository-name/
-    const pathSegments = pathname.split('/').filter(Boolean);
-    if (pathSegments.length > 0) {
-      return `/${pathSegments[0]}`;
-    }
-  }
-  return '';
-};
-
 /**
  * Fetches the word list from words.txt, processes it, and caches it.
  * This should be called once when the application initializes.
