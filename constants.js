@@ -1,6 +1,7 @@
 
 export const WORD_LENGTH = 5;
 export const MAX_GUESSES = 6;
+export const MAX_SCRAMBLE_LIVES = 3;
 
 export const KEYBOARD_LAYOUT = [
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],

@@ -16,3 +16,8 @@ export const Theme = {
     LIGHT: 'light',
     DARK: 'dark'
 };
+
+export const GameMode = {
+    WORDLE: 'WORDLE',
+    WORD_SCRAMBLE: 'WORD_SCRAMBLE'
+};
